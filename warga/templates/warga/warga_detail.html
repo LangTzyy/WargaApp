@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Warga</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            background: #fff;
+            width: 500px;
+            padding: 30px 35px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            font-size: 22px;
+            text-align: center;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            text-align: left;
+            color: #555;
+            width: 40%;
+            padding: 10px 0;
+            vertical-align: top;
+        }
+
+        td {
+            padding: 10px 0;
+            color: #222;
+        }
+
+        tr:not(:last-child) td, tr:not(:last-child) th {
+            border-bottom: 1px solid #eee;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 25px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #005fc5;
+        }
+
+        .footer {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Detail Warga</h1>
+        <p class="subtitle">Informasi lengkap data warga kelurahan</p>
+
+        <table>
+            <tr>
+                <th>Nama Lengkap</th>
+                <td>{{ object.nama_lengkap }}</td>
+            </tr>
+            <tr>
+                <th>NIK</th>
+                <td>{{ object.nik }}</td>
+            </tr>
+            <tr>
+                <th>Alamat</th>
+                <td>{{ object.alamat }}</td>
+            </tr>
+            <tr>
+                <th>No. Telepon</th>
+                <td>{{ object.no_telepon|default:"-" }}</td>
+            </tr>
+            <tr>
+                <th>Tanggal Registrasi</th>
+                <td>{{ object.tanggal_registrasi|date:"d M Y, H:i" }}</td>
+            </tr>
+        </table>
+
+        <a href="{% url 'warga-list' %}" class="btn-back">⬅️ Kembali ke Daftar</a>
+
+        <div class="footer">
+            Data diperbarui: {{ object.tanggal_registrasi|date:"d M Y, H:i" }}
+        </div>
+    </div>
+</body>
+</html>
