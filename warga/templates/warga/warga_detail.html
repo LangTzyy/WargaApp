@@ -5,132 +5,81 @@
     <title>Detail Warga</title>
     <style>
         body {
-            font-family: "Segoe UI", Arial, sans-serif;
-            background-color: #f4f6f9;
+            font-family: times new roman, Arial, sans-serif;
             margin: 0;
-            padding: 40px;
-            display: flex;
-            justify-content: center;
+            padding: 20px;
         }
-
-        .card {
+        .container {
             background: #fff;
-            width: 500px;
-            padding: 30px 35px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
-
         h1 {
-            font-size: 22px;
             text-align: center;
             color: #333;
-            margin-bottom: 8px;
         }
-
-        p.subtitle {
-            text-align: center;
-            font-size: 13px;
-            color: #777;
-            margin-bottom: 25px;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            margin-bottom: 20px;
         }
-
         th {
             text-align: left;
-            color: #555;
             width: 40%;
-            padding: 10px 0;
-            vertical-align: top;
+            color: #555;
+            padding: 6px 0;
         }
-
         td {
-            padding: 10px 0;
+            padding: 6px 0;
             color: #222;
         }
-
-        tr:not(:last-child) td, tr:not(:last-child) th {
-            border-bottom: 1px solid #eee;
+        .laporan {
+            border-top: 1px solid #ddd;
+            margin-top: 15px;
+            padding-top: 10px;
         }
-
-        .btn-back {
+        a {
             display: inline-block;
-            margin-top: 25px;
-            background-color: #007bff;
-            color: white;
+            margin-top: 15px;
             text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: background 0.2s ease;
+            background: #007bff;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
         }
-
-        .btn-back:hover {
-            background-color: #005fc5;
-        }
-
-        .footer {
-            text-align: right;
-            margin-top: 20px;
-            font-size: 12px;
-            color: #888;
+        a:hover {
+            background: #005fc1;
         }
     </style>
 </head>
 <body>
-    <div class="card">
+    <div class="container">
         <h1>Detail Warga</h1>
-        <p class="subtitle">Informasi lengkap data warga kelurahan</p>
 
         <table>
-            <tr>
-                <th>Nama Lengkap</th>
-                <td>{{ object.nama_lengkap }}</td>
-            </tr>
-            <tr>
-                <th>NIK</th>
-                <td>{{ object.nik }}</td>
-            </tr>
-            <tr>
-                <th>Alamat</th>
-                <td>{{ object.alamat }}</td>
-            </tr>
-            <tr>
-                <th>No. Telepon</th>
-                <td>{{ object.no_telepon|default:"-" }}</td>
-            </tr>
-            <tr>
-                <th>Tanggal Registrasi</th>
-                <td>{{ object.tanggal_registrasi|date:"d M Y, H:i" }}</td>
-            </tr>
+            <tr><th>Nama Lengkap</th><td>{{ object.nama_lengkap }}</td></tr>
+            <tr><th>NIK</th><td>{{ object.nik }}</td></tr>
+            <tr><th>Alamat</th><td>{{ object.alamat }}</td></tr>
+            <tr><th>No. Telepon</th><td>{{ object.no_telepon|default:"-" }}</td></tr>
+            <tr><th>Tanggal Registrasi</th><td>{{ object.tanggal_registrasi|date:"d M Y, H:i" }}</td></tr>
         </table>
 
-        <a href="{% url 'warga-list' %}" class="btn-back">⬅️ Kembali ke Daftar</a>
+        <hr>
+        <h3>Daftar Laporan Warga</h3>
+        {% for laporan in object.laporan.all %}
+            <div class="laporan">
+                <strong>{{ laporan.judul }}</strong><br>
+                <small>{{ laporan.tanggal_laporan|date:"d M Y, H:i" }}</small>
+                <p>{{ laporan.isi_laporan }}</p>
+            </div>
+        {% empty %}
+            <p>Belum ada laporan yang dibuat oleh warga ini.</p>
+        {% endfor %}
 
-        <div class="footer">
-            Data diperbarui: {{ object.tanggal_registrasi|date:"d M Y, H:i" }}
-        </div>
-        <hr>
-        <h2>Daftar Laporan Warga</h2>
-        <ul>
-            {% for laporan in object.laporan.all %}
-                <li>
-                    <strong>{{ laporan.judul }}</strong> — {{ laporan.tanggal_laporan|date:"d M Y" }}<br>
-                    {{ laporan.isi_laporan|truncatewords:20 }}
-                </li>
-            {% empty %}
-                <li>Belum ada laporan yang dibuat oleh warga ini.</li>
-            {% endfor %}
-        </ul>
-    
-        <hr>
         <a href="{% url 'warga-list' %}">⬅️ Kembali ke Daftar Warga</a>
     </div>
 </body>
 </html>
-
