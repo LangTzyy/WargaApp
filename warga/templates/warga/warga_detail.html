@@ -115,6 +115,22 @@
         <div class="footer">
             Data diperbarui: {{ object.tanggal_registrasi|date:"d M Y, H:i" }}
         </div>
+        <hr>
+        <h2>Daftar Laporan Warga</h2>
+        <ul>
+            {% for laporan in object.laporan.all %}
+                <li>
+                    <strong>{{ laporan.judul }}</strong> — {{ laporan.tanggal_laporan|date:"d M Y" }}<br>
+                    {{ laporan.isi_laporan|truncatewords:20 }}
+                </li>
+            {% empty %}
+                <li>Belum ada laporan yang dibuat oleh warga ini.</li>
+            {% endfor %}
+        </ul>
+    
+        <hr>
+        <a href="{% url 'warga-list' %}">⬅️ Kembali ke Daftar Warga</a>
     </div>
 </body>
 </html>
+
