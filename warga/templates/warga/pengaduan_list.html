@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Pengaduan Warga</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif; 
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 15px;
+            background: #007bff;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        li {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 15px 20px;
+            margin-bottom: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+        }
+
+        strong {
+            font-size: 1.1em;
+            color: #0077cc;
+        }
+
+        em {
+            color: #555;
+        }
+
+        p {
+            margin-top: 8px;
+            color: #444;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: white;
+            margin-left: 8px;
+        }
+
+        .status.BARU { background-color: #17a2b8; }
+        .status.DIPROSES { background-color: #ffc107; color: #222; }
+        .status.SELESAI { background-color: #28a745; }
+
+        .action-btns {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+        }
+
+        a.edit-btn,
+        a.delete-btn,
+        a.cancel-btn {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 13px;
+            color: #fff;
+            text-align: center;
+        }
+
+        a.edit-btn { background-color: #007bff; }
+        a.delete-btn, .delete-btn { background-color: #dc3545; border: none; }
+        a.cancel-btn { background-color: #6c757d; }
+
+        a.edit-btn:hover { background-color: #0056b3; }
+        a.delete-btn:hover, .delete-btn:hover { background-color: #b02a37; }
+        a.cancel-btn:hover { background-color: #5a6268; }
+
+        a.back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            text-decoration: none;
+            color: #0077cc;
+            font-weight: 600;
+        }
+
+        a.back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daftar Semua Pengaduan Warga</h1>
+
+    <ul>
+        <a href="{% url 'pengaduan-tambah' %}" class="btn">➕ Tambah Pengaduan</a>
+        {% for aduan in object_list %}
+            <li>
+                <strong>{{ aduan.judul }}</strong>
+                oleh <em>{{ aduan.pelapor.nama_lengkap }}</em>
+                <span class="status {{ aduan.status|upper }}">{{ aduan.get_status_display }}</span>
+                <p>{{ aduan.deskripsi }}</p>
+                <div class="action-btns">
+                    <a href="{% url 'pengaduan-edit' aduan.pk %}" class="edit-btn">Edit</a>
+                    <a href="{% url 'pengaduan-hapus' aduan.pk %}" class="delete-btn">Hapus</a>
+                </div>
+            </li>
+        {% empty %}
+            <li>Belum ada pengaduan yang terdaftar.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'warga-list' %}" class="back">⬅️ Kembali ke Daftar Warga</a>
+</body>
+</html>

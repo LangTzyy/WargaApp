@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Konfirmasi Hapus</title>
+    <link rel="stylesheet" href="{% static 'warga/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Hapus Data Warga</h1>
+        <p>Apakah Anda yakin ingin menghapus warga bernama <strong>{{ object.nama_lengkap }}</strong>?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="delete-btn">Ya, Hapus</button>
+            <a href="{% url 'warga-detail' object.pk %}" class="cancel-btn">Batal</a>
+        </form>
+    </div>
+</body>
+</html>

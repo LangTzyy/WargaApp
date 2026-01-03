@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Warga</title>
+    <style>
+    body { 
+        font-family: "Times New Roman", serif; 
+        background: #fafafa; 
+        padding: 20px; 
+    }
+    .container { 
+        max-width: 600px; 
+        margin: auto; 
+        background: #fff; 
+        padding: 15px;
+        border: 1px solid #ddd; 
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    h1, h3 { 
+        text-align: center; 
+        margin: 10px 0; 
+    }
+    table { 
+        width: 100%; 
+    }
+    th, td { 
+        text-align: left; 
+        padding: 4px 0; 
+        vertical-align: top; 
+    }
+    hr { 
+        border: none; 
+        border-top: 1px solid #ccc; 
+        margin: 15px 0; 
+    }
+    a { 
+        background: #007bff; 
+        color: #fff; 
+        padding: 6px 12px; 
+        border-radius: 3px; 
+        text-decoration: none; 
+        display: inline-block;
+    }
+    a:hover {
+        background: #0056b3;
+    }
+    .aduan {
+        margin-bottom: 15px;
+        padding: 10px;
+        background: #f2f7ff;
+        border: 1px solid #cce0ff;
+        border-radius: 4px;
+    }
+    .aduan strong {
+        color: #003366;
+    }
+    .aduan small {
+        color: #555;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detail Warga</h1>
+
+        <table>
+            <tr><th>Nama Lengkap</th><td>{{ object.nama_lengkap }}</td></tr>
+            <tr><th>NIK</th><td>{{ object.nik }}</td></tr>
+            <tr><th>Alamat</th><td>{{ object.alamat }}</td></tr>
+            <tr><th>No. Telepon</th><td>{{ object.no_telepon|default:"-" }}</td></tr>
+            <tr><th>Tanggal Registrasi</th><td>{{ object.tanggal_registrasi|date:"d M Y, H:i" }}</td></tr>
+        </table>
+
+        <hr>
+
+        <h3>Daftar Pengaduan oleh {{ object.nama_lengkap }}</h3>
+
+        {% for aduan in object.pengaduan.all %}
+            <div class="aduan">
+                <strong>{{ aduan.judul }}</strong><br>
+                <small>{{ aduan.tanggal_lapor|date:"d M Y, H:i" }}</small>
+                <p>{{ aduan.deskripsi }}</p>
+                <p><em>Status:</em> <strong>{{ aduan.get_status_display }}</strong></p>
+            </div>
+        {% empty %}
+            <p>Belum ada pengaduan yang dibuat oleh warga ini.</p>
+        {% endfor %}
+
+        <a href="{% url 'warga-list' %}">⬅️ Kembali ke Daftar Warga</a>
+    </div>
+</body>
+</html>

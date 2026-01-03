@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Tambah Warga Baru</title>
+    <link rel="stylesheet" href="{% static 'warga/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Form Pendaftaran Warga Baru</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- NIK dan Nama sejajar -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_nik">NIK</label>
+                    {{ form.nik }}
+                </div>
+                <div class="form-group">
+                    <label for="id_nama_lengkap">Nama Lengkap</label>
+                    {{ form.nama_lengkap }}
+                </div>
+            </div>
+
+            <!-- Field lain tetap vertikal -->
+            <div class="form-group">
+                <label for="id_alamat">Alamat</label>
+                {{ form.alamat }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_no_telepon">Nomor Telepon</label>
+                {{ form.no_telepon }}
+            </div>
+
+            <button type="submit">Simpan</button>
+        </form>
+
+        <a href="{% url 'warga-list' %}">⬅️ Kembali ke Daftar Warga</a>
+    </div>
+</body>
+</html>

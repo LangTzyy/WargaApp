@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if object %}Edit Pengaduan{% else %}Tambah Pengaduan Baru{% endif %}</title>
+    <link rel="stylesheet" href="{% static 'warga/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>
+            {% if object %}
+                Edit Pengaduan
+            {% else %}
+                Form Tambah Pengaduan
+            {% endif %}
+        </h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Simpan</button>
+        </form>
+
+        <a href="{% url 'pengaduan-list' %}">⬅️ Kembali ke Daftar Pengaduan</a>
+    </div>
+</body>
+</html>

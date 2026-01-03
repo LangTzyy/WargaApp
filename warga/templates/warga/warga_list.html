@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Warga Kelurahan</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            background-color: #f7f7f7;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        table {
+            width: 50%;
+            margin: 0 auto 5px;
+            border-collapse: collapse;
+            background: #fff;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 15px;
+            background: #007bff;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+        }
+
+        .delete-btn:hover {
+            background: #a71d2a;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daftar Warga Kelurahan</h1>
+
+    {% if object_list %}
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Lengkap</th>
+                <th>Alamat</th>
+                <th>NIK</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for warga in object_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'warga-detail' warga.pk %}">{{ warga.nama_lengkap }}</a></td>
+                <td>{{ warga.alamat }}</td>
+                <td>{{ warga.nik }}</td>
+                <td>
+                    <a href="{% url 'warga-edit' warga.pk %}" class="btn">Edit</a>
+                    <a href="{% url 'warga-hapus' warga.pk %}" class="btn delete-btn" >Hapus</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p><i>Belum ada data warga yang terdaftar.</i></p>
+    {% endif %}
+
+    <div>
+        <a href="{% url 'warga-tambah' %}" class="btn">➕ Tambah Warga</a>
+        <a href="{% url 'pengaduan-list' %}" class="btn">📋 Daftar Pengaduan</a>
+    </div>
+</body>
+</html>
